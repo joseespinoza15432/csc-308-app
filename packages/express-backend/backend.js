@@ -98,7 +98,7 @@ const addUser = (user) => {
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
   addUser(userToAdd);
-  res.send();
+  res.send(201).send();
 });
 
 // DELETE USERS
