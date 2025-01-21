@@ -91,14 +91,15 @@ app.get("/users/:id", (req, res) => {
 // ADD USERS
 
 const addUser = (user) => {
-  users["users_list"].push(user);
-  return user;
+  const newUser = { ...user, id: Math.random().toString(36).substring(2,9)}
+  users["users_list"].push(newUser);
+  return newUser;
 };
 
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
-  addUser(userToAdd);
-  res.send(201).send();
+  const newUser = addUser(userToAdd);
+  res.status(201).send(newUser);
 });
 
 // DELETE USERS
@@ -113,11 +114,11 @@ const deleteUserById = (id) => {
 };
 
 app.delete("/users/:id", (req, res) => {
-    const id = req.params.id; // Access the 'id' parameter from the URL
+    const id = req.params.id; 
     const success = deleteUserById(id);
 
     if (success) {
-        res.status(200).send(`User with ID ${id} deleted successfully.`);
+        res.status(204).send();
     } else {
         res.status(404).send("User not found.");
     }
